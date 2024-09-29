@@ -7,12 +7,6 @@ import { subscribeToAuthChanges } from '../services/auth';
 const messages = ref([]);
 const messageContainer = ref(null);
 
-const newMessage = ref({
-    name: '',
-    displayName: '',
-    text: '',
-});
-
 function scrollToBottom() {
     const container = messageContainer.value;
     if (container) {
@@ -28,9 +22,17 @@ const loggedUser = ref({
     username: null,
 })
 
+const newMessage = ref({
+    sentBy: loggedUser.id,
+    text: '',
+});
+
 onMounted(async () => {
     subscribeToPublicChatMessages(newMessages => messages.value = newMessages);
-    subscribeToAuthChanges(newUserData => loggedUser.value = newUserData);
+    subscribeToAuthChanges(newUserData => {
+        loggedUser.value = newUserData;
+        newMessage.value.sentBy = loggedUser.value.id;
+    });
     scrollToBottom();
 });
 
@@ -40,7 +42,8 @@ watch(messages, () => {
 
 function handleSubmit() {
     savePublicChatMessage({
-        ...newMessage.value,
+        sentBy: loggedUser.value.id,
+        text: newMessage.value.text,
     });
     
     newMessage.value.text = '';

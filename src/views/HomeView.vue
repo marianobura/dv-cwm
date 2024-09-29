@@ -6,12 +6,6 @@ import { subscribeToAuthChanges } from '../services/auth';
 
 const posts = ref([]);
 
-const newPost = ref({
-    username: '',
-    displayName: '',
-    text: '',
-});
-
 const loggedUser = ref({
     id: null,
     email: null,
@@ -20,9 +14,17 @@ const loggedUser = ref({
     username: null,
 })
 
+const newPost = ref({
+    sentBy: loggedUser.id,
+    text: '',
+});
+
 onMounted(async () => {
     subscribeToPost(newPosts => posts.value = newPosts);
-    subscribeToAuthChanges(newUserData => loggedUser.value = newUserData);
+    subscribeToAuthChanges(newUserData => {
+        loggedUser.value = newUserData
+        newPost.value.sentBy = loggedUser.value.id;
+    });
 });
 
 function handleSubmit() {
@@ -31,7 +33,8 @@ function handleSubmit() {
     }
 
     savePost({
-        ...newPost.value,
+        sentBy: loggedUser.value.id,
+        text: newPost.value.text,
     });
 
     newPost.value.text = '';

@@ -2,15 +2,14 @@ import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 
 import { db } from "./firebase";
 
 /**
- * @param {{name: string, displayName: string, text: string}} newMessage
+ * @param {{sentBy: string, text: string}} newMessage
  * @return {Promise}
  */
-export async function savePost( { username, displayName, text } ) {
+export async function savePost( { sentBy, text } ) {
     const postRef = collection(db, 'posts');
 
     await addDoc(postRef, {
-        username,
-        displayName,
+        sentBy,
         text,
         created_at: serverTimestamp(),
     });
@@ -23,8 +22,7 @@ export function subscribeToPost(callback) {
         const posts = snapshot.docs.map(doc => {
             return {
                 id: doc.id,
-                username: doc.data().username,
-                displayName: doc.data().displayName,
+                sentBy: doc.data().sentBy,
                 text: doc.data().text,
             }
         });
