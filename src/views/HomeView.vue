@@ -18,12 +18,16 @@ const loggedUser = ref({
 
 const newPost = ref({
     sentBy: loggedUser.id,
+    displayName: loggedUser.displayName,
+    username: loggedUser.username,
     text: '',
 });
 
 const newComment = ref({
     postId: null,
     sentBy: loggedUser.id,
+    displayName: loggedUser.displayName,
+    username: loggedUser.username,
     text: '',
 });
 
@@ -44,6 +48,8 @@ function handleSubmitPost() {
 
     savePost({
         sentBy: loggedUser.value.id,
+        displayName: loggedUser.value.displayName,
+        username: loggedUser.value.username,
         text: newPost.value.text,
     });
 
@@ -58,6 +64,8 @@ function handleSubmitComment(postId) {
     savePostComment({
         postId,
         sentBy: loggedUser.value.id,
+        displayName: loggedUser.value.displayName,
+        username: loggedUser.value.username,
         text: newComment.value.text,
     });
 
@@ -83,8 +91,8 @@ function handleSubmitComment(postId) {
                     <div class="flex gap-3 items-center">
                         <img class="block h-12 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
                         <div class="flex flex-col">
-                            <p class="font-medium">{{ loggedUser.displayName }}</p>
-                            <p class="text-neutral-600">@{{ loggedUser.username }}</p>
+                            <p class="font-medium">{{ post.displayName }}</p>
+                            <p class="text-neutral-600">@{{ post.username }}</p>
                         </div>
                     </div>
                     <p>{{ post.text }}</p>
@@ -99,7 +107,7 @@ function handleSubmitComment(postId) {
                     <div v-for="comment in comments" class="flex flex-col gap-2 bg-neutral-50 p-2 mt-4 border">
                         <div class="flex gap-2 items-center">
                             <img class="block h-6 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
-                            <p class="font-medium text-sm">{{ loggedUser.displayName }} <span class="font-normal text-neutral-600">~ @{{ loggedUser.displayName }}</span></p>
+                            <p class="font-medium text-sm">{{ comment.displayName }} <span class="font-normal text-neutral-600">~ @{{ comment.username }}</span></p>
                         </div>
                         <p class="text-sm">{{ comment.text }}</p>
                     </div>

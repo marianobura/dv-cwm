@@ -24,6 +24,8 @@ const loggedUser = ref({
 
 const newMessage = ref({
     sentBy: loggedUser.id,
+    displayName: loggedUser.displayName,
+    username: loggedUser.username,
     text: '',
 });
 
@@ -43,6 +45,8 @@ watch(messages, () => {
 function handleSubmit() {
     savePublicChatMessage({
         sentBy: loggedUser.value.id,
+        displayName: loggedUser.value.displayName,
+        username: loggedUser.value.username,
         text: newMessage.value.text,
     });
     
@@ -63,8 +67,8 @@ function handleSubmit() {
                     </div>
                     <div class="flex flex-col">
                         <div class="flex gap-2">
-                            <p class="font-medium">{{ loggedUser.displayName }}</p>
-                            <p class="text-neutral-600">~ @{{ loggedUser.username }}</p>
+                            <p class="font-medium">{{ message.displayName }}</p>
+                            <p class="text-neutral-600">~ @{{ message.username }}</p>
                         </div>
                         <p class="text-clip">{{ message.text }}</p>
                     </div>

@@ -2,15 +2,17 @@ import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 
 import { db } from "./firebase";
 
 /**
- * @param {{sentBy: string, postId: string, text: string}} newMessage
+ * @param {{sentBy: string, displayName: string, username: string, text: string}} newMessage
  * @return {Promise}
  */
-export async function savePostComment( { sentBy, postId, text } ) {
+export async function savePostComment( { postId, sentBy, displayName, username, text } ) {
     const commentRef = collection(db, 'comments');
 
     await addDoc(commentRef, {
-        sentBy,
         postId,
+        sentBy,
+        displayName,
+        username,
         text,
         created_at: serverTimestamp(),
     });
@@ -25,6 +27,8 @@ export function subscribeToPostComment(callback) {
                 id: doc.id,
                 postId: doc.data().postId,
                 sentBy: doc.data().sentBy,
+                displayName: doc.data().displayName,
+                username: doc.data().username,
                 text: doc.data().text,
             }
         });
