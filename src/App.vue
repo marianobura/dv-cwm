@@ -80,25 +80,29 @@ const handleLogout = () => {
         <div class="overflow-auto h-body min-h-body p-4">
             <p class="text-lg font-medium">Últimos posts</p>
             <template v-if="loggedUser.id !== null">
-                <ul class="flex flex-col gap-2 mt-3">
-                    <!-- for -->
-                    <li v-for="post in posts" class="flex items-center justify-between">
-                        <div class="flex gap-3 truncate">
-                            <div class="flex justify-center items-center h-12 w-12 rounded-sm bg-indigo-50 text-indigo-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sticky-note"><path d="M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8Z"/><path d="M15 3v4a2 2 0 0 0 2 2h4"/></svg>
+                <template v-if="posts == true">
+                    <ul class="flex flex-col gap-2 mt-3">
+                        <!-- for -->
+                        <li v-for="post in posts" class="flex items-center justify-between">
+                            <div class="flex gap-3 truncate">
+                                <div class="flex justify-center items-center h-12 w-12 rounded-sm bg-indigo-50 text-indigo-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sticky-note"><path d="M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8Z"/><path d="M15 3v4a2 2 0 0 0 2 2h4"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-medium"><span class="font-normal">Por: </span>{{ post.displayName }}</p>
+                                    <p class="text-sm text-neutral-500 truncate">{{ post.text }}</p>
+                                </div>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-medium"><span class="font-normal">Por: </span>{{ post.displayName }}</p>
-                                <p class="text-sm text-neutral-500 truncate">{{ post.text }}</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                        <!-- for -->
+                    </ul>
+                </template>
+                <template v-else>
+                    <p class="text-neutral-600">No hay posts recientes</p>
+                </template>
             </template>
             <template v-else>
-                <div>
-                    <p><router-link to="/login" class="font-medium text-indigo-500 border-b border-indigo-500 hover:border-b-2">Inicia sesión</router-link> para ver los posts más recientes</p>
-                </div>
+                <p class="text-neutral-600"><router-link to="/login" class="font-medium text-indigo-500 border-b border-indigo-500 hover:border-b-2">Inicia sesión</router-link> para ver los posts más recientes</p>
             </template>
         </div>
     </footer>

@@ -77,17 +77,17 @@ function handleSubmitComment(postId) {
     <BaseHeading1>Inicio</BaseHeading1>
 
     <div class="overflow-auto p-4 h-body min-h-body">
-        <div class="w-full h-auto bg-white mb-6 border">
+        <div class="w-full h-auto bg-white mb-4 border">
             <form action="#" @submit.prevent="handleSubmitPost" class="flex gap-3 relative p-4">
                 <label for="text" class="absolute left-[22px] top-[22px] text-sm text-white bg-indigo-500 py-1 px-2 rounded-sm">Post:</label>
                 <input type="text" name="text" id="text" class="block rounded-sm border pl-14 border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="Nuevo post" v-model="newPost.text">
                 <button class="h-10 w-10 flex items-center justify-center border rounded-sm border-indigo-500 text-indigo-500 hover:bg-indigo-500 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"/><path d="M6 12h16"/></svg></button>
             </form>
         </div>
-        <div class="grid gap-4 grid-cols-2">
+        <div class="grid gap-4 grid-cols-1 2xl:grid-cols-2">
             <!-- for -->
-            <div v-for="post in posts" :key="post.id" class="flex flex-col p-4 bg-white border">
-                <div class="flex flex-col gap-3 justify-between flex-1">
+            <div v-for="post in posts" :key="post.id" class="flex flex-col p-4 bg-white border break-all">
+                <div class="flex flex-col gap-3 flex-1">
                     <div class="flex gap-3 items-center">
                         <img class="block h-12 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
                         <div class="flex flex-col">
