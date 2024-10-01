@@ -3,15 +3,15 @@ import { onMounted, ref } from 'vue';
 import { logout, subscribeToAuthChanges } from './services/auth';
 import NavbarLinks from './components/Navigation/NavbarLinks.vue';
 import { useRouter } from 'vue-router';
+import { subscribeToPost } from './services/posts';
 
 const router = useRouter();
-const loggedUser = ref({
-    id: null,
-    email: null,
-});
+const loggedUser = ref([]);
+const posts = ref([]);
 
 onMounted(() => {
     subscribeToAuthChanges(newUserData => loggedUser.value = newUserData);
+    subscribeToPost(newPosts => posts.value = newPosts);
 });
 
 const handleLogout = () => {
@@ -78,31 +78,28 @@ const handleLogout = () => {
             </template>
         </div>
         <div class="overflow-auto h-body min-h-body p-4">
-            <p class="text-lg font-medium">Chats recientes</p>
-            <ul class="flex flex-col gap-4 mt-3">
-                <!-- for -->
-                <template v-if="loggedUser.id !== null">
-                    <li class="flex items-center justify-between">
-                        <div class="flex gap-3">
-                            <img class="block h-12 rounded-sm" src="https://i.pravatar.cc/150?img=12" alt="User Avatar">
+            <p class="text-lg font-medium">Últimos posts</p>
+            <template v-if="loggedUser.id !== null">
+                <ul class="flex flex-col gap-2 mt-3">
+                    <!-- for -->
+                    <li v-for="post in posts" class="flex items-center justify-between">
+                        <div class="flex gap-3 truncate">
+                            <div class="flex justify-center items-center h-12 w-12 rounded-sm bg-indigo-50 text-indigo-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sticky-note"><path d="M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8Z"/><path d="M15 3v4a2 2 0 0 0 2 2h4"/></svg>
+                            </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-medium">Sebastian Winter</p>
-                                <p class="text-sm text-neutral-500 truncate max-w-52">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <p class="font-medium"><span class="font-normal">Por: </span>{{ post.displayName }}</p>
+                                <p class="text-sm text-neutral-500 truncate">{{ post.text }}</p>
                             </div>
                         </div>
-                        <div class="flex justify-center items-center h-12 w-12 rounded-sm text-indigo-500 hover:text-white hover:bg-indigo-500 hover:cursor-pointer transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /><path d="M8 12h.01" /><path d="M12 12h.01" /><path d="M16 12h.01" /></svg>
-                        </div>
                     </li>
-                </template>
-                <template v-else>
-                    <!-- Login for see recent chats -->
-                    <div>
-                        <p><router-link to="/login" class="font-medium text-indigo-500 border-b border-indigo-500 hover:border-b-2">Inicia sesión</router-link> para ver tus chats recientes</p>
-                    </div>
-                </template>
-                <!-- for -->
-            </ul>
+                </ul>
+            </template>
+            <template v-else>
+                <div>
+                    <p><router-link to="/login" class="font-medium text-indigo-500 border-b border-indigo-500 hover:border-b-2">Inicia sesión</router-link> para ver los posts más recientes</p>
+                </div>
+            </template>
         </div>
     </footer>
 </template>

@@ -61,31 +61,29 @@ function handleSubmit() {
         <div ref="messageContainer" class="bg-white border h-chat min-h-chat overflow-auto p-4">
             <div class="flex flex-col gap-4 h-auto w-full">
                 <!-- for -->
-                <div v-for="message in messages" class="flex gap-3 p-4 bg-white border w-fit">
+                <div v-for="message in messages" class="flex break-all gap-3 p-4 w-fit max-w-prose" :class="{ 
+                    'bg-indigo-500 self-end flex-row-reverse': message.sentBy === loggedUser.id, 
+                    'bg-white border': message.sentBy !== loggedUser.id }">
                     <div class="min-w-12">
                         <img class="block h-12 w-12 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
                     </div>
                     <div class="flex flex-col">
-                        <div class="flex gap-2">
-                            <p class="font-medium">{{ message.displayName }}</p>
-                            <p class="text-neutral-600">~ @{{ message.username }}</p>
+                        <div class="flex gap-2" :class="{
+                            'justify-end': message.sentBy === loggedUser.id,
+                            'justify-start': message.sentBy !== loggedUser.id
+                        }">
+                            <p class="font-medium" :class="{ 
+                            'text-white': message.sentBy === loggedUser.id, 
+                            'text-black': message.sentBy !== loggedUser.id }">{{ message.displayName }}</p>
+                            <p :class="{ 
+                            'text-neutral-200': message.sentBy === loggedUser.id, 
+                            'text-neutral-600': message.sentBy !== loggedUser.id }">~ @{{ message.username }}</p>
                         </div>
-                        <p class="text-clip">{{ message.text }}</p>
+                        <p class="text-clip" :class="{ 
+                        'text-white': message.sentBy === loggedUser.id, 
+                        'text-black': message.sentBy !== loggedUser.id }">{{ message.text }}</p>
                     </div>
                 </div>
-                <!-- for -->
-                <!-- <div v-for="message in messages" class="flex gap-3 p-4 bg-indigo-500 border w-fit">
-                    <div class="min-w-12">
-                        <img class="block h-12 w-12 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
-                    </div>
-                    <div class="flex flex-col">
-                        <div class="flex gap-2">
-                            <p class="text-white font-medium">{{ message.name }}</p>
-                            <p class="text-neutral-300">~ {{ message.displayName }}</p>
-                        </div>
-                        <p class="text-white text-clip">{{ message.text }}</p>
-                    </div>
-                </div> -->
             </div>
         </div>
         <div class="bg-white p-4 border h-auto">
