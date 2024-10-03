@@ -65,7 +65,7 @@ function handleSubmit() {
                     'bg-indigo-500 self-end flex-row-reverse': message.sentBy === loggedUser.id, 
                     'bg-white border': message.sentBy !== loggedUser.id }">
                     <div class="min-w-12">
-                        <img class="block h-12 w-12 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
+                        <img class="block h-12 w-12 rounded-sm" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" alt="User Avatar">
                     </div>
                     <div class="flex flex-col">
                         <div class="flex gap-2" :class="{
@@ -87,11 +87,12 @@ function handleSubmit() {
             </div>
         </div>
         <div class="bg-white p-4 border h-auto">
-            <form action="#" @submit.prevent="handleSubmit" class="flex w-full gap-2 relative">
-                <img class="block h-10 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
-                <label for="text" class="absolute left-[54px] top-[6px] text-sm text-white bg-indigo-500 py-1 px-2 rounded-sm">Mensaje:</label>
-                <input type="text" name="text" id="text" class="block rounded-sm border pl-20 border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="Escribe un mensaje..." required v-model="newMessage.text">
-                <button class="h-10 w-10 flex items-center justify-center border rounded-sm border-indigo-500 text-indigo-500 hover:bg-indigo-500 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"/><path d="M6 12h16"/></svg></button>
+            <form @submit.prevent="handleSubmit" class="flex gap-2">
+                <div class="flex border border-neutral-400 w-full">
+                    <label for="message" class="text-sm text-white bg-indigo-500 px-1.5 py-1 h-fit m-[5px] rounded-sm">Mensaje</label>
+                    <input type="text" name="message" id="message" class="block rounded-sm py-1.5 pr-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="Escribe un nuevo mensaje" v-model="newMessage.text" />
+                </div>
+                <button type="submit" class="h-10 w-10 flex items-center justify-center border rounded-sm border-indigo-500 text-indigo-500 hover:bg-indigo-500 hover:text-white transition flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"/><path d="M6 12h16"/></svg></button>
             </form>
         </div>
     </div>

@@ -1,6 +1,7 @@
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-import { auth } from "./firebase";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { auth, db } from "./firebase";
 import { getUserProfileById, updateUserProfile } from "./user-profile";
+import { doc, setDoc } from "firebase/firestore";
 
 let loggedUser = {
     id: null,
@@ -45,6 +46,29 @@ onAuthStateChanged(auth, async user => {
 
     notifyAll();
 });
+
+export async function register(userData) {
+    const auth = getAuth();
+    
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
+        const authUser = userCredential.user;
+
+        await updateProfile(authUser, {
+            displayName: userData.displayName,
+        });
+
+        await setDoc(doc(db, 'users', authUser.uid), {
+            email: userData.email,
+            username: userData.username,
+            displayName: userData.displayName,
+        });
+        
+    } catch (error) {
+        console.error("[Register] Error en el registro: ", error);
+        throw error;
+    }
+}
 
 export async function login({email, password}) {
     try {

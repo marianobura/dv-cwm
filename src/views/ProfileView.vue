@@ -47,7 +47,8 @@ onMounted(() => {
                             <hr>
                             <div class="flex flex-col">
                                 <dt class="mb-1 text-gray-500">Biografía</dt>
-                                <dd class="text-lg font-semibold">{{ loggedUser.bio }}</dd>
+                                <dd v-if="loggedUser.bio === undefined || loggedUser.bio === '' || loggedUser.bio === null" class="text-base font-normal">No tiene biografía</dd>
+                                <dd v-else class="text-lg font-semibold">{{ loggedUser.bio }}</dd>
                             </div>
                         </dl>
                     </div>

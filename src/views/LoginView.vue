@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { login } from '../services/auth';
+import BaseButton from '../components/BaseButton.vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 
 const router = useRouter();
@@ -44,7 +45,7 @@ async function handleSubmit() {
                             <input type="password" name="password" id="password" class="w-full block rounded-sm border border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="test123" v-model="user.password">
                         </div>
                         <div class="flex items-center mt-4 gap-4">
-                            <button class="py-2 px-4 border rounded-sm border-indigo-500 text-indigo-500 hover:bg-indigo-500 hover:text-white transition">Iniciar sesión</button>
+                            <BaseButton>Iniciar sesión</BaseButton>
                             <p class="text-gray-500">¿No tienes cuenta? <router-link to="/register" class="font-medium text-indigo-500 border-b border-indigo-500 hover:border-b-2">Registrate</router-link></p>
                         </div>
                     </form>

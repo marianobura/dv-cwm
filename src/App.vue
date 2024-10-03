@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { logout, subscribeToAuthChanges } from './services/auth';
-import NavbarLinks from './components/Navigation/NavbarLinks.vue';
+import NavbarLinks from './components/NavbarLinks.vue';
 import { useRouter } from 'vue-router';
 import { subscribeToPost } from './services/posts';
 
@@ -35,7 +35,7 @@ const handleLogout = () => {
                 <hr class="h-px mb-2 bg-black border-0 opacity-30">
                 <div class="flex justify-between items-center pt-2">
                     <div class="flex flex-row gap-3 items-center">
-                        <img class="block h-12 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
+                        <img class="block h-12 rounded-sm" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" alt="User Avatar">
                         <div class="flex flex-col">
                             <p class="font-medium">{{ loggedUser.displayName }}</p>
                             <p class="text-neutral-600">@{{ loggedUser.username }}</p>
@@ -61,7 +61,7 @@ const handleLogout = () => {
         <div class="flex items-center justify-between border-b h-24 p-4">
             <template v-if="loggedUser.id !== null">
                 <div class="flex flex-row gap-3 items-center">
-                    <img class="block h-12 rounded-sm" src="https://i.pravatar.cc/150?img=13" alt="User Avatar">
+                    <img class="block h-12 rounded-sm" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" alt="User Avatar">
                     <div class="flex flex-col">
                         <p class="font-medium">{{ loggedUser.displayName }}</p>
                         <p class="text-neutral-600">@{{ loggedUser.username }}</p>
