@@ -80,7 +80,7 @@ const handleLogout = () => {
         <div class="overflow-auto h-body min-h-body p-4">
             <p class="text-lg font-medium">Últimos posts</p>
             <template v-if="loggedUser.id !== null">
-                <template v-if="posts == true">
+                <template v-if="posts.length > 0">
                     <ul class="flex flex-col gap-2 mt-3">
                         <!-- for -->
                         <li v-for="post in posts" class="flex items-center justify-between">
