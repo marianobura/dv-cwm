@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { register } from '../services/auth';
 import BaseButton from '../components/BaseButton.vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
-import BaseInput from '../components/BaseInput.vue';
+import BaseAuthInput from '../components/BaseAuthInput.vue';
 import SignState from '../components/SignState.vue';
 
 const router = useRouter();
@@ -35,7 +35,7 @@ const handleSubmit = async () => {
             <div class="w-full bg-white border">
                 <div class="p-4">
                     <form class="space-y-4" action="#" @submit.prevent="handleSubmit">
-                        <BaseInput
+                        <BaseAuthInput
                             label="Correo electrónico"
                             type="text"
                             fni="email"
@@ -43,14 +43,14 @@ const handleSubmit = async () => {
                             v-model="user.email"
                         />
                         <div class="flex w-full gap-2">
-                            <BaseInput
+                            <BaseAuthInput
                                 label="Nombre"
                                 type="text"
                                 fni="displayName"
                                 placeholder="Nombre"
                                 v-model="user.displayName"
                             />
-                            <BaseInput
+                            <BaseAuthInput
                                 label="Nombre de usuario"
                                 type="text"
                                 fni="username"
@@ -59,7 +59,7 @@ const handleSubmit = async () => {
                             />
                         </div>
                         <div>
-                            <BaseInput
+                            <BaseAuthInput
                                 label="Contraseña"
                                 type="password"
                                 fni="password"

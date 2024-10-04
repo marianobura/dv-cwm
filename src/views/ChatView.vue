@@ -3,6 +3,7 @@ import BaseHeading1 from '../components/BaseHeading1.vue';
 import { onMounted, ref, watch, onUnmounted } from 'vue';
 import { savePublicChatMessage, subscribeToPublicChatMessages } from '../services/public-chat';
 import { subscribeToAuthChanges } from '../services/auth';
+import BaseInput from '../components/BaseInput.vue';
 
 let unsubscribeFromAuth = () => {};
 const messages = ref([]);
@@ -97,11 +98,13 @@ onUnmounted(() => {
         </div>
         <div class="bg-white p-4 border h-auto">
             <form @submit.prevent="handleSubmit" class="flex gap-2">
-                <div class="flex border border-neutral-400 w-full">
-                    <label for="message" class="text-sm text-white bg-indigo-500 px-1.5 py-1 h-fit m-[5px] rounded-sm">Mensaje</label>
-                    <input type="text" name="message" id="message" class="block rounded-sm py-1.5 pr-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="Escribe un nuevo mensaje" v-model="newMessage.text" />
-                </div>
-                <button type="submit" class="h-10 w-10 flex items-center justify-center border rounded-sm border-indigo-500 text-indigo-500 hover:bg-indigo-500 hover:text-white transition flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"/><path d="M6 12h16"/></svg></button>
+                <BaseInput 
+                    label="Mensaje"
+                    type="text"
+                    fni="message"
+                    placeholder="Escribe un nuevo mensaje"
+                    v-model="newMessage.text"
+                />
             </form>
         </div>
     </div>
