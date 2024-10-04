@@ -23,7 +23,6 @@ async function handleSubmit() {
         router.push('/');
     } catch (error) {
         console.error("[Login handleSubmit] Error al autenticar: ", error);
-        // TODO: Manejar el error y mostrar un feedback.
     }
 
     loading.value = false;
