@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router';
 import { register } from '../services/auth';
 import BaseButton from '../components/BaseButton.vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
+import BaseInput from '../components/BaseInput.vue';
+import SignState from '../components/SignState.vue';
 
 const router = useRouter();
 
@@ -33,27 +35,41 @@ const handleSubmit = async () => {
             <div class="w-full bg-white border">
                 <div class="p-4">
                     <form class="space-y-4" action="#" @submit.prevent="handleSubmit">
-                        <div>
-                            <label for="email" class="block text-gray-500 mb-2">Correo electrónico</label>
-                            <input type="text" name="email" id="email" class="w-full block rounded-sm border border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="test@test.com" v-model="user.email">
-                        </div>
+                        <BaseInput
+                            label="Correo electrónico"
+                            type="text"
+                            fni="email"
+                            placeholder="test@test.com"
+                            v-model="user.email"
+                        />
                         <div class="flex w-full gap-2">
-                            <div class="w-full">
-                                <label for="displayName" class="block text-gray-500 mb-2">Nombre</label>
-                                <input type="text" name="displayName" id="displayName" class="w-full block rounded-sm border border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="John Doe" v-model="user.displayName">
-                            </div>
-                            <div class="w-full">
-                                <label for="username" class="block text-gray-500 mb-2">Nombre de usuario</label>
-                                <input type="text" name="username" id="username" class="w-full block rounded-sm border border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="johndoe" v-model="user.username">
-                            </div>
+                            <BaseInput
+                                label="Nombre"
+                                type="text"
+                                fni="displayName"
+                                placeholder="Nombre"
+                                v-model="user.displayName"
+                            />
+                            <BaseInput
+                                label="Nombre de usuario"
+                                type="text"
+                                fni="username"
+                                placeholder="@usuario"
+                                v-model="user.username"
+                            />
                         </div>
                         <div>
-                            <label for="password" class="block text-gray-500 mb-2">Contraseña</label>
-                            <input type="password" name="password" id="password" class="w-full block rounded-sm border border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="test123" v-model="user.password">
+                            <BaseInput
+                                label="Contraseña"
+                                type="password"
+                                fni="password"
+                                placeholder="test123"
+                                v-model="user.password"
+                            />
                         </div>
                         <div class="flex items-center mt-4 gap-4">
                             <BaseButton>Crear cuenta</BaseButton>
-                            <p class="text-gray-500">¿Ya tienes cuenta? <router-link to="/login" class="font-medium text-indigo-500 border-b border-indigo-500 hover:border-b-2">Iniciar sesión</router-link></p>
+                            <SignState register />
                         </div>
                     </form>
                 </div>

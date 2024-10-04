@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router';
 import { login } from '../services/auth';
 import BaseButton from '../components/BaseButton.vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
+import BaseInput from '../components/BaseInput.vue';
+import SignState from '../components/SignState.vue';
 
 const router = useRouter();
 
@@ -36,17 +38,23 @@ async function handleSubmit() {
             <div class="w-full bg-white border">
                 <div class="p-4">
                     <form class="space-y-4" action="#" @submit.prevent="handleSubmit">
-                        <div>
-                            <label for="displayName" class="block text-gray-500 mb-2">Correo electrónico</label>
-                            <input type="text" name="displayName" id="displayName" class="w-full block rounded-sm border border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="test@test.com" v-model="user.email">
-                        </div>
-                        <div>
-                            <label for="password" class="block text-gray-500 mb-2">Contraseña</label>
-                            <input type="password" name="password" id="password" class="w-full block rounded-sm border border-neutral-400 py-1.5 px-3 placeholder:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none flex-1 transition" placeholder="test123" v-model="user.password">
-                        </div>
+                        <BaseInput
+                            label="Correo electrónico"
+                            type="text"
+                            fni="email"
+                            placeholder="test@test.com"
+                            v-model="user.email"
+                        />
+                        <BaseInput
+                            label="Contraseña"
+                            type="password"
+                            fni="password"
+                            placeholder="test123"
+                            v-model="user.password"
+                        />
                         <div class="flex items-center mt-4 gap-4">
                             <BaseButton>Iniciar sesión</BaseButton>
-                            <p class="text-gray-500">¿No tienes cuenta? <router-link to="/register" class="font-medium text-indigo-500 border-b border-indigo-500 hover:border-b-2">Registrate</router-link></p>
+                            <SignState login />
                         </div>
                     </form>
                 </div>

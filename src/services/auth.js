@@ -12,39 +12,39 @@ let loggedUser = {
     fullyLoaded: false,
 }
 
+if(localStorage.getItem('user')) {
+    loggedUser = JSON.parse(localStorage.getItem('user'));
+}
+
 let observers = [];
 
 onAuthStateChanged(auth, async user => {
     if(user) {
-        loggedUser = {
+        updateLoggedUser({
             id: user.uid,
             email: user.email,
             displayName: user.displayName,
-        }
+        })
 
         getUserProfileById(user.uid)
             .then(userProfile => {
-                loggedUser = {
-                    ...loggedUser,
+                updateLoggedUser({
                     bio: userProfile.bio,
                     username: userProfile.username,
                     fullyLoaded: true,
-                }
-
-                notifyAll();
+                })
             })
     } else {
-        loggedUser = {
+        updateLoggedUser({
             id: null,
             email: null,
             displayName: null,
             bio: null,
             username: null,
             fullyLoaded: false,
-        }
+        });
+        localStorage.removeItem('user');
     }
-
-    notifyAll();
 });
 
 export async function register(userData) {
@@ -87,17 +87,17 @@ export async function login({email, password}) {
  */
 export async function editProfile({displayName, bio, username}) {
     try {
-        await updateProfile(auth.currentUser, { displayName });
+        const promiseAuth = updateProfile(auth.currentUser, { displayName });
 
-        updateUserProfile(loggedUser.id, {displayName, bio, username});
+        const promiseProfile = updateUserProfile(loggedUser.id, {displayName, bio, username});
 
-        loggedUser = {
-            ...loggedUser,
+        await Promise.all([promiseAuth, promiseProfile]);
+
+        updateLoggedUser({
             displayName,
             bio,
             username,
-        }
-        notifyAll();
+        });
     } catch (error) {
         console.error('[auth.js editMyProfile] Error al editar el perfil');
         throw error;
@@ -110,11 +110,15 @@ export async function logout() {
 
 /**
  * 
- * @param {Function} callback 
+ * @param {Function} callback
+ * @return {Function} Función para cancelar la suscripción.
  */
 export function subscribeToAuthChanges(callback) {
     observers.push(callback);
+
     notifyAll();
+
+    return () => observers = observers.filter(obs => obs !== callback)
 }
 
 /**
@@ -127,4 +131,14 @@ function notify(callback) {
 
 function notifyAll() {
     observers.forEach(callback => notify(callback));
+}
+
+function updateLoggedUser(newData) {
+    loggedUser = {
+        ...loggedUser,
+        ...newData,
+    }
+
+    localStorage.setItem('user', JSON.stringify(loggedUser));
+    notifyAll();
 }

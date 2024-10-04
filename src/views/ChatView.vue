@@ -1,9 +1,10 @@
 <script setup>
 import BaseHeading1 from '../components/BaseHeading1.vue';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, onUnmounted } from 'vue';
 import { savePublicChatMessage, subscribeToPublicChatMessages } from '../services/public-chat';
 import { subscribeToAuthChanges } from '../services/auth';
 
+let unsubscribeFromAuth = () => {};
 const messages = ref([]);
 const messageContainer = ref(null);
 
@@ -30,8 +31,8 @@ const newMessage = ref({
 });
 
 onMounted(async () => {
-    subscribeToPublicChatMessages(newMessages => messages.value = newMessages);
-    subscribeToAuthChanges(newUserData => {
+    unsubscribeFromAuth = subscribeToPublicChatMessages(newMessages => messages.value = newMessages);
+    unsubscribeFromAuth = subscribeToAuthChanges(newUserData => {
         loggedUser.value = newUserData;
         newMessage.value.sentBy = loggedUser.value.id;
     });
@@ -43,6 +44,10 @@ watch(messages, () => {
 });
 
 function handleSubmit() {
+    if (!newMessage.value.text) {
+        return;
+    }
+
     savePublicChatMessage({
         sentBy: loggedUser.value.id,
         displayName: loggedUser.value.displayName,
@@ -52,6 +57,10 @@ function handleSubmit() {
     
     newMessage.value.text = '';
 }
+
+onUnmounted(() => {
+    unsubscribeFromAuth();
+})
 </script>
 
 <template>

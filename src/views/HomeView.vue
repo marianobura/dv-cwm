@@ -4,7 +4,6 @@ import { onMounted, ref } from 'vue';
 import { savePost, subscribeToPost } from '../services/posts';
 import { savePostComment, subscribeToPostComment } from '../services/post-comments';
 import { subscribeToAuthChanges } from '../services/auth';
-import BaseInput from '../components/BaseInput.vue';
 
 const posts = ref([]);
 const comments = ref([]);
