@@ -12,7 +12,7 @@ export default {
         'chat': 'calc(100vh - 96px - 122px)',
       },
       gridTemplateColumns: {
-        'layout': '300px 1fr 400px',
+        'layout': '300px 1fr',
       },
       minHeight: {
         'body': 'calc(100vh - 96px)',
