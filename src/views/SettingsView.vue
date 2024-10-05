@@ -31,7 +31,7 @@ const handleSubmit = async () => {
         await editProfile({...editData.value});
         router.push('/profile')
     } catch (error) {
-        // TODO
+        console.log('Error al guardar los cambios', error);
     }
 
     loading.value = false;

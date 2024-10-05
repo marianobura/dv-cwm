@@ -24,6 +24,7 @@ onAuthStateChanged(auth, async user => {
             id: user.uid,
             email: user.email,
             displayName: user.displayName,
+            username: user.username,
         })
 
         getUserProfileById(user.uid)
@@ -62,6 +63,7 @@ export async function register(userData) {
             email: userData.email,
             username: userData.username,
             displayName: userData.displayName,
+            bio: '',
         });
         
     } catch (error) {
@@ -87,8 +89,7 @@ export async function login({email, password}) {
  */
 export async function editProfile({displayName, bio, username}) {
     try {
-        const promiseAuth = updateProfile(auth.currentUser, { displayName });
-
+        const promiseAuth = updateProfile(auth.currentUser, { displayName, username });
         const promiseProfile = updateUserProfile(loggedUser.id, {displayName, bio, username});
 
         await Promise.all([promiseAuth, promiseProfile]);
@@ -116,9 +117,11 @@ export async function logout() {
 export function subscribeToAuthChanges(callback) {
     observers.push(callback);
 
-    notifyAll();
+    notify(callback);
 
-    return () => observers = observers.filter(obs => obs !== callback)
+    return () => {
+        observers = observers.filter(obs => obs !== callback);
+    }
 }
 
 /**
