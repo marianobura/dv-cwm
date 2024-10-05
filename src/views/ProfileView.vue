@@ -69,7 +69,7 @@ onUnmounted(() => {
                         </dl>
                     </div>
                 </div>
-                <template v-if="posts.length > 0">
+                <template v-if="posts.filter(post => post.sentBy === loggedUser.id).length > 0">
                     <div class="flex flex-col w-full h-fit">
                         <p class="text-lg font-medium">Últimos posts de @{{ loggedUser.username }}</p>
                         <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 mt-3">
